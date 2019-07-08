@@ -34,6 +34,11 @@ func main() {
 		if err != nil {
 			log.Errorf("Could not Tag the Node %s. %s ", node, err)
 		}
+
+		err = kubernetes.SetTagonNode(node, AppSettings)
+		if err != nil {
+			log.Errorf("Could not annotate the Node %s on K8s API . %s ", node, err)
+		}
 	}
 
 	time.Sleep(60 * time.Minute)

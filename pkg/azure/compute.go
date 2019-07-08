@@ -58,6 +58,8 @@ func UpdateVMTags(ctx context.Context, vm *compute.VirtualMachine, appSettings a
 		return fmt.Errorf("cannot get the vm create or update future response: %v", err)
 	}
 
+	log.Printf("Updated VM: %s with tags %s", *vm.Name, vm.Tags)
+
 	return nil
 
 }
