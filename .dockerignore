@@ -1,0 +1,10 @@
+.*
+*.md
+DCO
+LICENSE
+NOTICE
+docs
+deployments
+README.md
+Makefile
+bin
