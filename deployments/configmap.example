@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: kube-tags2iaas-config
 data:
-  INFRASTRUCTURETAGS: {"foo": "hello","bar": "world"}
+  INFRASTRUCTURETAGS: "{\"foo\": \"hello\",\"bar\": \"world\"}"

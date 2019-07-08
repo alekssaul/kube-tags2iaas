@@ -17,3 +17,6 @@ bin
 # Deployment Secrets
 deployments/configmap.yaml
 deployments/secret.yaml
+
+# OSX
+.DS_STORE

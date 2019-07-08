@@ -8,3 +8,6 @@ deployments
 README.md
 Makefile
 bin
+
+# OSX
+.DS_STORE
