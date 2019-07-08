@@ -3,25 +3,33 @@ package main
 import (
 	"context"
 	"fmt"
-
+	"os"
 	"time"
 
 	"github.com/alekssaul/kube-tags2iaas/pkg/appsettings"
 	azure "github.com/alekssaul/kube-tags2iaas/pkg/azure"
+	"github.com/alekssaul/kube-tags2iaas/pkg/kubernetes"
 	log "github.com/sirupsen/logrus"
 )
 
 func main() {
 	log.Println("Initializing the application")
-	AppSettings, err := appsettings.GetAppSettings()
+	//AppSettings, err := appsettings.GetAppSettings()
+	_, err := appsettings.GetAppSettings()
 	if err != nil {
 		log.Fatalf("Could not initialize the application. %s ", err)
 	}
 
-	err = TagCloudVM("test", AppSettings)
+	err = kubernetes.GetUntaggedNodes()
 	if err != nil {
-		log.Errorf("Could not initialize the application. %s ", err)
+		log.Fatalf("Could not get list of Nodes from Kubernetes. %s ", err)
 	}
+
+	// err = TagCloudVM("minikube", AppSettings)
+	// if err != nil {
+	// 	log.Errorf("Could not Tag the Node. %s ", err)
+	// }
+	os.Exit(0)
 
 }
 
@@ -30,9 +38,9 @@ func TagCloudVM(vmName string, settings appsettings.AppSettings) (err error) {
 	// Get VM from Azure
 	ctx, cancel := context.WithTimeout(context.Background(), 6000*time.Second)
 	defer cancel()
-	vm, err := azure.GetVM(ctx, "test")
+	vm, err := azure.GetVM(ctx, vmName)
 	if err != nil {
-		return fmt.Errorf("Error Retrieving VM object from Cloud: %v", err)
+		return fmt.Errorf("Error Retrieving VM object %s from Cloud: %v", vmName, err)
 	}
 
 	// Update the tag

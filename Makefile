@@ -19,8 +19,8 @@ vendor:
 	
 .PHONY: docker-build
 docker-build:
-	@docker build . -t quay.io/alekssaul/kube-tags2iaas:dev
-	@docker push quay.io/alekssaul/kube-tags2iaas:dev
+	@docker build . -t alekssaul/kube-tags2iaas:dev
+	@docker push alekssaul/kube-tags2iaas:dev
 
 .PHONY: test
 test:

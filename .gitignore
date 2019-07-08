@@ -13,3 +13,7 @@
 
 # Binaries
 bin
+
+# Deployment Secrets
+deployments/configmap.yaml
+deployments/secret.yaml
