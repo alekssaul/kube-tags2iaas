@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-tags2iaas
+  labels:
+    app: kube-tags2iaas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kube-tags2iaas
+  template:
+    metadata:
+      labels:
+        app: kube-tags2iaas
+    spec:
+      serviceAccountName: kube-tags2iaas-sa
+      containers:
+      - name: kube-tags2iaas
+        image: alekssaul/kube-tags2iaas:dev
+        imagePullPolicy: Always   
+        env:
+        - name: INFRASTRUCTURETAGS
+          valueFrom:
+            configMapKeyRef:
+              name: kube-tags2iaas-config
+              key: INFRASTRUCTURETAGS
+        - name: AZURE_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: kube-tags2iaas-secret
+              key: AZURE_CLIENT_ID
+        - name: AZURE_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: kube-tags2iaas-secret
+              key: AZURE_CLIENT_SECRET
+        - name: AZURE_GROUP_NAME
+          valueFrom:
+            secretKeyRef:
+              name: kube-tags2iaas-secret
+              key: AZURE_GROUP_NAME
+        - name: AZURE_LOCATION_DEFAULT
+          valueFrom:
+            secretKeyRef:
+              name: kube-tags2iaas-secret
+              key: AZURE_LOCATION_DEFAULT
+        - name: AZURE_SUBSCRIPTION_ID
+          valueFrom:
+            secretKeyRef:
+              name: kube-tags2iaas-secret
+              key: AZURE_SUBSCRIPTION_ID
+        - name: AZURE_TENANT_ID
+          valueFrom:
+            secretKeyRef:
+              name: kube-tags2iaas-secret
+              key: AZURE_TENANT_ID
