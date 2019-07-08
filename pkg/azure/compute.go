@@ -8,10 +8,11 @@ import (
 	"github.com/alekssaul/kube-tags2iaas/pkg/appsettings"
 	log "github.com/sirupsen/logrus"
 
+	"fmt"
+
 	"github.com/Azure/azure-sdk-for-go/services/compute/mgmt/2018-06-01/compute"
 	"github.com/alekssaul/kube-tags2iaas/pkg/azure/internal/config"
 	"github.com/alekssaul/kube-tags2iaas/pkg/azure/internal/iam"
-	"fmt"
 )
 
 func getVMClient() compute.VirtualMachinesClient {

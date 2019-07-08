@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"os"
 	"time"
 
 	"github.com/alekssaul/kube-tags2iaas/pkg/appsettings"
@@ -12,24 +11,32 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+func init() {
+	log.SetLevel(log.DebugLevel)
+}
+
 func main() {
 	log.Println("Initializing the application")
-	//AppSettings, err := appsettings.GetAppSettings()
-	_, err := appsettings.GetAppSettings()
+	AppSettings, err := appsettings.GetAppSettings()
 	if err != nil {
 		log.Fatalf("Could not initialize the application. %s ", err)
 	}
 
-	err = kubernetes.GetUntaggedNodes()
+	nodes2tag, err := kubernetes.GetUntaggedNodes(AppSettings)
 	if err != nil {
 		log.Fatalf("Could not get list of Nodes from Kubernetes. %s ", err)
 	}
+	log.Debugf("nodes2tag: %v", nodes2tag)
 
-	// err = TagCloudVM("minikube", AppSettings)
-	// if err != nil {
-	// 	log.Errorf("Could not Tag the Node. %s ", err)
-	// }
-	os.Exit(0)
+	for _, node := range nodes2tag {
+		log.Printf("Node %s needs to be tagged, calling the Cloud API", node)
+		err = TagCloudVM(node, AppSettings)
+		if err != nil {
+			log.Errorf("Could not Tag the Node %s. %s ", node, err)
+		}
+	}
+
+	time.Sleep(60 * time.Minute)
 
 }
 

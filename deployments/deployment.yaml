@@ -35,6 +35,11 @@ spec:
             secretKeyRef:
               name: kube-tags2iaas-secret
               key: AZURE_CLIENT_SECRET
+        - name: AZURE_BASE_GROUP_NAME
+          valueFrom:
+            secretKeyRef:
+              name: kube-tags2iaas-secret
+              key: AZURE_GROUP_NAME
         - name: AZURE_GROUP_NAME
           valueFrom:
             secretKeyRef:
@@ -55,3 +60,5 @@ spec:
             secretKeyRef:
               name: kube-tags2iaas-secret
               key: AZURE_TENANT_ID
+        - name: AZURE_KEEP_SAMPLE_RESOURCES
+          value: "0"
